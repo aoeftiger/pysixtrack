@@ -1,5 +1,7 @@
 from pyoptics import madlang,optics
 
+import time
+
 #see sps/madx/a001_track_thin.madx
 mad=madlang.open('madx/SPS_Q20_thin.seq')
 mad.acta_31637.volt=4.5
@@ -30,7 +32,10 @@ def compare(prun,pbench):
 
 prun=get_part(pbench,0)
 for turn in range(1,30):
+    t0 = time.time()
     sps.track(prun)
+    t1 = time.time() - t0
+    print (f'*** Timing per track: {t1:.3f}')
     compare(prun,get_part(pbench,turn))
 
 
