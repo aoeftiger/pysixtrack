@@ -82,12 +82,13 @@ class Particles(object):
             elif beta0 is not None:
                 self.beta0 = beta0
         else:
-            raise ValueError(f"""\
+            raise ValueError("""\
             Particles defined with multiple energy references:
             p0c    = {p0c},
             energy0     = {energy0},
             gamma0 = {gamma0},
-            beta0  = {beta0}""")
+            beta0  = {beta0}""".format(
+                p0c=p0c, energy0=energy0, gamma0=gamma0, beta0=beta0))
 
     def __init__delta(self, delta, ptau, psigma):
         not_none = count_not_none(delta, ptau, psigma)
@@ -101,11 +102,11 @@ class Particles(object):
             elif psigma is not None:
                 self.psigma = psigma
         else:
-            raise ValueError(f"""
+            raise ValueError("""
             Particles defined with multiple energy deviations:
             delta  = {delta},
             ptau     = {ptau},
-            psigma = {psigma}""")
+            psigma = {psigma}""".format(delta=delta, ptau=ptau, psigma=psigma))
 
     def __init__zeta(self, zeta, tau, sigma):
         not_none = count_not_none(zeta, tau, sigma)
@@ -119,11 +120,11 @@ class Particles(object):
             elif sigma is not None:
                 self.sigma = sigma
         else:
-            raise ValueError(f"""\
+            raise ValueError("""\
             Particles defined with multiple time deviations:
             zeta  = {zeta},
             tau   = {tau},
-            sigma = {sigma}""")
+            sigma = {sigma}""".format(zeta=zeta, tau=tau, sigma=sigma))
 
     def __init__chi(self, mratio, qratio, chi):
         not_none = count_not_none(mratio, qratio, chi)
@@ -132,11 +133,11 @@ class Particles(object):
             self._mratio = 1.
             self._qratio = 1.
         elif not_none == 1:
-            raise ValueError(f"""\
+            raise ValueError("""\
             Particles defined with insufficient mass/charge information:
             chi    = {chi},
             mratio = {mratio},
-            qratio = {qratio}""")
+            qratio = {qratio}""".format(chi=chi, mratio=mratio, qratio=qratio))
         elif not_none == 2:
             if chi is None:
                 self._mratio = mratio
@@ -148,11 +149,11 @@ class Particles(object):
                 self._chi = chi
                 self.mratio = mratio
         else:
-            raise ValueError(f"""
+            raise ValueError("""
             Particles defined with multiple mass/charge information:
             chi    = {chi},
             mratio = {mratio},
-            qratio = {qratio}""")
+            qratio = {qratio}""".format(chi=chi, mratio=mratio, qratio=qratio))
 
     def __init__(self,
                  s=0., x=0., px=0., y=0., py=0.,
@@ -326,21 +327,38 @@ class Particles(object):
             self.py = Py/(p0c*mratio)
 
     def __repr__(self):
-        out = f"""\
-        mass0   = {self.mass0}
-        p0c     = {self.p0c}
-        energy0 = {self.energy0}
-        beta0   = {self.beta0}
-        gamma0  = {self.gamma0}
-        s       = {self.s}
-        x       = {self.x}
-        px      = {self.px}
-        y       = {self.y}
-        py      = {self.py}
-        zeta    = {self.zeta}
-        delta   = {self.delta}
-        ptau    = {self.ptau}
-        mratio  = {self.mratio}
-        qratio  = {self.qratio}
-        chi     = {self.chi}"""
+        out = """\
+        mass0   = {mass0}
+        p0c     = {p0c}
+        energy0 = {energy0}
+        beta0   = {beta0}
+        gamma0  = {gamma0}
+        s       = {s}
+        x       = {x}
+        px      = {px}
+        y       = {y}
+        py      = {py}
+        zeta    = {zeta}
+        delta   = {delta}
+        ptau    = {ptau}
+        mratio  = {mratio}
+        qratio  = {qratio}
+        chi     = {chi}""".format(
+            mass0 = self.mass0,
+            p0c = self.p0c,
+            energy0 = self.energy0,
+            beta0 = self.beta0,
+            gamma0 = self.gamma0,
+            s = self.s,
+            x = self.x,
+            px = self.px,
+            y = self.y,
+            py = self.py,
+            zeta = self.zeta,
+            delta = self.delta,
+            ptau = self.ptau,
+            mratio = self.mratio,
+            qratio = self.qratio,
+            chi = self.chi,
+        )
         return out

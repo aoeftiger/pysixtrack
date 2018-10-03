@@ -38,7 +38,9 @@ class Element(object):
         not_allowed = set(nargs.keys())-set(self.__slots__)
         if len(not_allowed) > 0:
             cname = self.__class__.__name__
-            raise NameError(f"{not_allowed} not allowed by {cname}")
+#            raise NameError(f"{not_allowed} not allowed by {cname}")
+            raise NameError("{not_allowed} not allowed by {cname}".format(
+                not_allowed=not_allowed, cname=cname))
         for name, default in zip(self.__slots__, self.__defaults__):
             setattr(self, name, nargs.get(name, default))
 
@@ -47,9 +49,12 @@ class Element(object):
         return zip(names, [getattr(self, name) for name in names])
 
     def __repr__(self):
-        args = [f"{name}={val}" for name, val in self._slots()]
+#        args = [f"{name}={val}" for name, val in self._slots()]
+        args = ["{name}={val}".format(name=name, val=val)
+                for name, val in self._slots()]
         args = ", ".join(args)
-        return f"{self.__class__.__name__}({args})"
+        return "{}({})".format(self.__class__.__name__, args)
+        # return f"{self.__class__.__name__}({args})"
 
     def as_dict(self):
         return dict(self._slots())
