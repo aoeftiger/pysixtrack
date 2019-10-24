@@ -306,13 +306,14 @@ class Line(Element):
 
     @classmethod
     def from_madx_sequence(
-        cls, sequence, classes=elements, ignored_madtypes=[], exact_drift=False
-    ):
+        cls, sequence, classes=elements, ignored_madtypes=[], 
+        exact_drift=False, install_apertures=False):
 
         line = cls(elements=[], element_names=[])
 
         return _from_madx_sequence(
-            line, sequence, classes, ignored_madtypes, exact_drift
+            line, sequence, classes, ignored_madtypes, 
+            exact_drift, install_apertures,
         )
 
     # error handling (alignment, multipole orders, ...):
